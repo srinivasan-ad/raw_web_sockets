@@ -3,5 +3,8 @@ const ws = new WebSocketServer({port : 8080});
 //event handler
 ws.on("connection",function(socket)
 {
-    socket.send("hello");
+    setInterval(() => {
+
+        socket.send("hello");
+    },2000)
 })
