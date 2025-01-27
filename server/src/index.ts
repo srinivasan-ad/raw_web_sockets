@@ -8,6 +8,10 @@ ws.on("connection", function (socket) {
   }, 2000);
   //ping pong application
   socket.on("message",(e) => {
+    if(e.toString() == "ping")
+    {
+        socket.emit("pong");
+    }
     // console.log(e.toString());
   })
 });
