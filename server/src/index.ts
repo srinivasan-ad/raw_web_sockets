@@ -10,7 +10,7 @@ ws.on("connection", function (socket) {
   socket.on("message",(e) => {
     if(e.toString() == "ping")
     {
-        socket.emit("pong");
+        socket.send("pong");
     }
     // console.log(e.toString());
   })
