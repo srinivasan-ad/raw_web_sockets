@@ -6,7 +6,8 @@ ws.on("connection", function (socket) {
   setInterval(() => {
     socket.send("stock rate is " + Math.random());
   }, 2000);
+  //ping pong application
   socket.on("message",(e) => {
-    console.log(e.toString());
+    // console.log(e.toString());
   })
 });
