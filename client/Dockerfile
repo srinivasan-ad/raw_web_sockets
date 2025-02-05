@@ -1,28 +1,27 @@
-FROM node:20
+FROM node:20 AS base
 
-FROM base AS temp
-
-RUN apk add --no-cache libc6-compat
 
 WORKDIR /app
 
-COPY ./package.json ./
-COPY ./package-lock.json ./
-
+COPY package.json package-lock.json ./
 RUN npm ci
 
-COPY ./ ./
+COPY . .
 
 RUN npm run build
 
-FROM base AS runner
+
+FROM node:20 AS runner
 
 WORKDIR /app
 
-COPY --from=temp /app/.next/standalone ./
+COPY --from=base /app/.next ./.next
+COPY --from=base /app/public ./public
+COPY --from=base /app/package.json ./
+COPY --from=base /app/node_modules ./node_modules
 
-COPY --from=temp /app/.next/static ./.next/static
 
-COPY --from=temp /app/public ./public
+EXPOSE 3000
 
-CMD [ "/bin/sh", "-c", "node server.js" ]
+
+CMD ["npm", "run", "start"]
