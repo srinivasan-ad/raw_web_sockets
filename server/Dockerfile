@@ -4,8 +4,10 @@ WORKDIR /app
 
 COPY . .
 
+RUN npm install -g typescript
 RUN npm install
+RUN tsc -b 
 
 EXPOSE 8000
 
-CMD [ "tsc -b && node" , "./dist/index.js" ]
+CMD [ "node" , "./dist/index.js" ]
